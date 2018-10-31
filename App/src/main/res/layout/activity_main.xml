@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/MatchMatch.Vertical">
+
+    <FrameLayout
+        android:id="@+id/mContaier"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/mBottomNavBar"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+
+    <com.kotlin.base.widgets.BottomNavBar
+        android:id="@+id/mBottomNavBar"
+        style="@style/MatchWrap"
+        app:layout_constraintBottom_toBottomOf="parent" />
+</android.support.constraint.ConstraintLayout>
