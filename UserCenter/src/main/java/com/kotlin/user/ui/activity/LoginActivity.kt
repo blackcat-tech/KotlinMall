@@ -22,10 +22,6 @@ import org.jetbrains.anko.toast
 @Route(path = RouterPath.UserCenter.PATH_LOGIN)
 class LoginActivity : BaseMvpActivity<LoginPresenter>(), LoginView, OnClickListener {
 
-    override fun permissionsGranted(requestCode: Int, perms: MutableList<String>) {
-
-    }
-
 
     private var pressTime: Long = 0
 

@@ -17,9 +17,6 @@ import org.jetbrains.anko.toast
 
 
 class RegisterActivity : BaseMvpActivity<RegisterPresenter>(), RegisterView, OnClickListener {
-    override fun permissionsGranted(requestCode: Int, perms: MutableList<String>) {
-
-    }
 
     private var pressTime: Long = 0
 

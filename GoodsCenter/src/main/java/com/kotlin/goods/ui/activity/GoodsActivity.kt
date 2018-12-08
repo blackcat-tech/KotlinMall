@@ -24,11 +24,6 @@ import org.jetbrains.anko.startActivity
  */
 class GoodsActivity : BaseMvpActivity<GoodsListPresenter>(), GoodsListView , BGARefreshLayout.BGARefreshLayoutDelegate{
 
-
-    override fun permissionsGranted(requestCode: Int, perms: MutableList<String>) {
-
-    }
-
     private lateinit var mGoodsAdapter: GoodsAdapter
     private var mCurrentPage: Int = 1
     private var mMaxPage: Int = 1

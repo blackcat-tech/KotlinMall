@@ -47,7 +47,6 @@ import java.io.File
  */
 class UserInfoActivity : BaseMvpActivity<UserInfoPresenter>(), UserInfoView, TakePhoto.TakeResultListener, InvokeListener {
 
-
     companion object {
         const val TAKE_PHOTO_ITEM_CAPTURE = 0
         const val TAKE_PHOTO_ITEM_GALLERY = 1
@@ -58,14 +57,6 @@ class UserInfoActivity : BaseMvpActivity<UserInfoPresenter>(), UserInfoView, Tak
      * 需要的危险权限
      */
     private val perms = arrayOf(Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE)
-
-    override fun permissionsGranted(requestCode: Int, perms: MutableList<String>) {
-        if (requestCode == RC_CAMERA_AND_READ_EXTERNAL) {
-            if (perms.contains(Manifest.permission.CAMERA) && perms.contains(Manifest.permission.READ_EXTERNAL_STORAGE)) {
-                takePhoto()
-            }
-        }
-    }
 
     private val mUploadManager: UploadManager by lazy { UploadManager() }
 

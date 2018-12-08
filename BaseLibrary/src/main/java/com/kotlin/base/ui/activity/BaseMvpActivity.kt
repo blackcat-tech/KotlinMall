@@ -1,6 +1,5 @@
 package com.kotlin.base.ui.activity
 
-import android.Manifest
 import android.os.Bundle
 import com.kotlin.base.lisenter.PermissionLisenter
 import com.kotlin.base.presenter.BasePresenter
@@ -11,7 +10,7 @@ import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
 import javax.inject.Inject
 
-abstract class BaseMvpActivity<T: BasePresenter<*>>: BaseActivity(), BaseView , EasyPermissions.PermissionCallbacks {
+abstract class BaseMvpActivity<T : BasePresenter<*>> : BaseActivity(), BaseView, EasyPermissions.PermissionCallbacks {
 
     override fun showLoading() {
         mLoadingDialog.showLoading()
@@ -48,18 +47,37 @@ abstract class BaseMvpActivity<T: BasePresenter<*>>: BaseActivity(), BaseView , 
      */
     override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {
         if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
-            AppSettingsDialog.Builder(this).build().show()
+            AppSettingsDialog.Builder(this)
+                    .setTitle("必要权限")
+                    .setRationale("应用不能正常运行，请到权限设置界面打开权限。")
+                    .build().show()
             //也可以自定义对话框
         }
     }
 
     override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {
-        permissionsGranted(requestCode,perms)
+
+        if (requestCode == this.baseRequestCode) {
+
+            for (i in basePerms.indices) {
+                if (!perms.contains(basePerms[i]))
+                    return
+            }
+
+            basePermissionLisenter.onPermissionsGranted()
+
+        }
     }
 
-    abstract fun permissionsGranted(requestCode: Int, perms: MutableList<String>)
+    lateinit var basePerms: Array<out String>
+    lateinit var basePermissionLisenter: PermissionLisenter
+    var baseRequestCode: Int = -1
 
-    fun checkPermissions(rational: String,requestCode: Int,perms: Array<out String>,permissionLisenter: PermissionLisenter) {
+    fun checkPermissions(rational: String, requestCode: Int, perms: Array<out String>, permissionLisenter: PermissionLisenter) {
+        this.baseRequestCode = requestCode
+        this.basePerms = perms
+        this.basePermissionLisenter = permissionLisenter
+
         if (EasyPermissions.hasPermissions(this, *perms)) {
             toast("权限已申请")
             permissionLisenter.onPermissionsGranted()
